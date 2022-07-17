@@ -10,36 +10,44 @@ public class RomanToInteger {
 
     public static void main(String[] args) {
         RomanToInteger romanToInteger = new RomanToInteger();
-        String s = "IV";
 
-        int result = romanToInteger.romanToInt(s);
-
-        System.out.println(result);
-        System.out.println(romanToInteger.valid("Vz"));
-
+        romanToInteger.test();
     }
 
     public int romanToInt(String s) {
-        char[] cv = s.toCharArray();
-        String sResult = "";
-        int tmp = 0;
-
         if(!this.valid(s)) {
             return 0;
         }
 
-        for (int i = 0; i < cv.length -1; i++) {
-            tmp = cv[i];
+        int result = this.convector(s.toCharArray());
 
-        }
-
-
-
-        int iResult = Integer.getInteger(sResult);
-        if(iResult < 1 || iResult > 3999) {
+        if(result < 1 || result > 3999) {
             return 0;
         }
-        return iResult;
+        return result;
+    }
+
+    private int convector(char[] cv) {
+        int result = 0;
+        if (cv.length == 1) {
+            return values.get(cv[0]);
+        }
+        for (int i = 0; i < cv.length -1; i++) {
+            int value = values.get(cv[i]);
+            int value_next = values.get(cv[i + 1]);
+
+            if (value < value_next) {
+                result += value_next - value;
+                i = i + 1;
+            }
+            else {
+                result += value;
+            }
+        }
+        if (values.get(cv[cv.length-2]) >= values.get(cv[cv.length-1])) {
+            result += values.get(cv[cv.length-1]);
+        }
+        return result;
     }
 
     private static Map<Character, Integer> getValue() {
@@ -67,36 +75,39 @@ public class RomanToInteger {
     }
 
     private void test() {
-        String v1 = "VI";        // 6
-        String v2 = "VIII";      // 8
-        String v3 = "IX";        // 9
-        String v4 = "LVIII";     // 58
-        String v5 = "MCMXCIV";   // 1996
-        String v6 = "CXXXIV";    // 134
-        String v7 = "LXXXVIII";  // 88
-        String v8 = "DXXI";      // 521
-        String v9 = "DCCXC";     // 790
-        String v10 = "MMMCMXCIX"; // 3999
-        String v11 = "MMMM";      // 4000 !
-        String v12 = "MMCCXXII";  // 2222
-        String v13 = "M";         // 1000
-        String v14 = "LVII";      // 57
-        String v15 = "CXLIX";     // 149
+        Map<String, Integer> testValues = new HashMap<>();
+        testValues.put("", 0);
+        testValues.put("V", 5);
+        testValues.put("VI", 6);
+        testValues.put("VIII", 8);
+        testValues.put("IX", 9);
+        testValues.put("LVIII", 58);
+        testValues.put("MCMXCIV", 1994);
+        testValues.put("CXXXIV", 134);
+        testValues.put("LXXXVIII", 88);
+        testValues.put("DXXI", 521);
+        testValues.put("DCCXC", 790);
+        testValues.put("MMMCMXCIX", 3999);
+        testValues.put("MMMM", 0);
+        testValues.put("MMCCXXII", 2222);
+        testValues.put("M", 1000);
+        testValues.put("LVII", 57);
+        testValues.put("CXLIX", 149);
+        testValues.put("MDCXCV", 1695);
 
-        System.out.println("v1: " + (this.romanToInt(v1) == 6) + "  (" + v1 + " -> " + this.romanToInt(v1) + ")" );
-        System.out.println("v2: " + (this.romanToInt(v2) == 8) + "  (" + v2 + " -> " + this.romanToInt(v2) + ")");
-        System.out.println("v3: " + (this.romanToInt(v3) == 9) + "  (" + v3 + " -> " +  this.romanToInt(v3) + ")");
-        System.out.println("v4: " + (this.romanToInt(v4) == 58) + "  (" + v4 + " -> " +  this.romanToInt(v4) + ")");
-        System.out.println("v5: " + (this.romanToInt(v5) == 1996) + "  (" + v5 + " -> " +  this.romanToInt(v5) + ")");
-        System.out.println("v6: " + (this.romanToInt(v6) == 134) + "  (" + v6 + " -> " +  this.romanToInt(v6) + ")");
-        System.out.println("v7: " + (this.romanToInt(v7) == 88) + "  (" + v7 + " -> " +  this.romanToInt(v7) + ")");
-        System.out.println("v8: " + (this.romanToInt(v8) == 521) + "  (" + v8 + " -> " +  this.romanToInt(v8) + ")");
-        System.out.println("v9: " + (this.romanToInt(v9) == 790) + "  (" + v9 + " -> " +  this.romanToInt(v9) + ")");
-        System.out.println("v10: " + (this.romanToInt(v10) == 3999) + "  (" + v10 + " -> " +  this.romanToInt(v10) + ")");
-        System.out.println("v11: " + !(this.romanToInt(v11) == 4000) + "  (" + v11 + " -> " +  this.romanToInt(v11) + ")");
-        System.out.println("v12: " + (this.romanToInt(v12) == 2222) + "  (" + v12 + " -> " +  this.romanToInt(v12) + ")");
-        System.out.println("v13: " + (this.romanToInt(v13) == 1000) + "  (" + v13 + " -> " +  this.romanToInt(v13) + ")");
-        System.out.println("v14: " + (this.romanToInt(v14) == 57) + "  (" + v14 + " -> " +  this.romanToInt(v14) + ")");
-        System.out.println("v15: " + (this.romanToInt(v15) == 149) + "  (" + v15 + " -> " +  this.romanToInt(v15) + ")");
+        boolean testsFailed = false;
+
+        for (Map.Entry<String, Integer> entry : testValues.entrySet()) {
+            int result = this.romanToInt(entry.getKey());
+            if (result != entry.getValue()) {
+                testsFailed = true;
+                System.out.println(entry.getKey() + " != " + entry.getValue() + " (" + result + ")");
+            }
+        }
+        if (!testsFailed) {
+            System.out.println("\nAll tests passed.\n");
+        } else {
+            System.out.println("\nAll tests failed!\n");
+        }
     }
 }
