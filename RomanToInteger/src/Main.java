@@ -1,6 +1,7 @@
 public class Main {
+
     public static void main(String[] args) {
-        RomanToInteger romanToInteger = new RomanToInteger();
+        Solution romanToInteger = new Solution();
 
         romanToInteger.test();
     }

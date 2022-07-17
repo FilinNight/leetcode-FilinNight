@@ -1,7 +1,10 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class RomanToInteger {
+/**
+ * <a href="https://leetcode.com/problems/roman-to-integer/submissions/"> 13. Roman to Integer. </a>
+ */
+public class Solution {
 
     private static final Map<Character, Integer> values = getValue();
 
