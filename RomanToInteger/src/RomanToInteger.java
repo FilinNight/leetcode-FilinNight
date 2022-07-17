@@ -1,18 +1,9 @@
-package main;
-
 import java.util.HashMap;
 import java.util.Map;
 
-// https://leetcode.com/problems/roman-to-integer
 public class RomanToInteger {
 
     private static final Map<Character, Integer> values = getValue();
-
-    public static void main(String[] args) {
-        RomanToInteger romanToInteger = new RomanToInteger();
-
-        romanToInteger.test();
-    }
 
     public int romanToInt(String s) {
         if(!this.valid(s)) {
@@ -74,7 +65,7 @@ public class RomanToInteger {
         return true;
     }
 
-    private void test() {
+    public void test() {
         Map<String, Integer> testValues = new HashMap<>();
         testValues.put("", 0);
         testValues.put("V", 5);
