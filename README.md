@@ -5,5 +5,5 @@ https://leetcode.com/
 my profile:
 https://leetcode.com/FilinNight/
 
-(1/8)
+(3/8)
 https://leetcode.com/problem-list/challenges-for-new-users/
